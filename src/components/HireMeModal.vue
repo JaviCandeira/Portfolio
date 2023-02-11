@@ -1,13 +1,19 @@
 <script>
 import feather from "feather-icons";
+import emailjs from "emailjs-com";
 import Button from "./reusable/ButtonUI.vue";
 import FormInput from "./reusable/FormInput.vue";
-import FormTextarea from "./reusable/FormTextarea.vue"
+import FormTextarea from "./reusable/FormTextarea.vue";
 export default {
   props: ["showModal", "modal", "categories"],
   components: { Button, FormInput, FormTextarea },
   data() {
-    return {};
+    return {
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    };
   },
   mounted() {
     feather.replace();
@@ -15,7 +21,30 @@ export default {
   updated() {
     feather.replace();
   },
-  methods: {},
+  methods: {
+    sendEmail(e) {
+      try {
+        emailjs.sendForm(
+          "service_io2bqqf",
+          "template_pe40ogh",
+          e.target,
+          "mg07CKtspvkEaZqSD",
+          {
+            name: this.name,
+            email: this.email,
+            subject: this.subject,
+            message: this.message,
+          }
+        );
+      } catch (err) {
+        console.log({ err });
+      }
+      this.name = "";
+      this.email = "";
+      this.subject = "";
+      this.message = "";
+    },
+  },
 };
 </script>
 
@@ -47,16 +76,18 @@ export default {
                 </button>
               </div>
               <div class="modal-body p-5 w-full h-full">
-                <form class="max-w-xl m-4 text-left">
+                <form @submit.prevent="sendEmail" class="max-w-xl m-4 text-left">
                   <FormInput
                     label="Full Name"
                     inputIdentifier="name"
                     class="mb-2"
+                    v-model="name"
                   />
                   <FormInput
                     label="Email"
                     inputIdentifier="email"
                     inputType="email"
+                    v-model="email"
                   />
 
                   <div class="mt-6 mb-4">
@@ -72,18 +103,20 @@ export default {
                       type="text"
                       required=""
                       aria-label="Project Category"
+                      
                     >
                       <option
                         v-for="category in categories"
                         :key="category.id"
                         :value="category.value"
+                        
                       >
                         {{ category.name }}
                       </option>
                     </select>
                   </div>
 
-                  <FormTextarea label="Details" textareaIdentifier="details" />
+                  <FormTextarea label="Details" v-model="message" textareaIdentifier="details" />
 
                   <div class="mt-7 pb-4 sm:pb-1">
                     <Button
@@ -114,39 +147,39 @@ export default {
 </template>
 <style scoped>
 .modal-body {
-	max-height: 570px;
+  max-height: 570px;
 }
 .bg-gray-800-opacity {
-	background-color: #2d374850;
+  background-color: #2d374850;
 }
 @media screen and (max-width: 768px) {
-	.modal-body {
-		max-height: 400px;
-	}
+  .modal-body {
+    max-height: 400px;
+  }
 }
 .fade-up-down-enter-active {
-	transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 .fade-up-down-leave-active {
-	transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 .fade-up-down-enter {
-	transform: translateY(10%);
-	opacity: 0;
+  transform: translateY(10%);
+  opacity: 0;
 }
 .fade-up-down-leave-to {
-	transform: translateY(10%);
-	opacity: 0;
+  transform: translateY(10%);
+  opacity: 0;
 }
 .fade-enter-active {
-	-webkit-transition: opacity 2s;
-	transition: opacity 0.3s;
+  -webkit-transition: opacity 2s;
+  transition: opacity 0.3s;
 }
 .fade-leave-active {
-	transition: opacity 0.3s;
+  transition: opacity 0.3s;
 }
 .fade-enter,
 .fade-leave-to {
-	opacity: 0;
+  opacity: 0;
 }
 </style>

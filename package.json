@@ -13,6 +13,7 @@
     "@vue/cli-plugin-eslint": "^5.0.8",
     "@vue/cli-plugin-router": "^5.0.8",
     "core-js": "^3.27.2",
+    "emailjs-com": "^3.2.0",
     "feather-icons": "^4.29.0",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-import": "^15.1.0",
@@ -33,7 +34,8 @@
     "eslint-plugin-vue": "^8.0.3",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.4",
-    "vue-cli-plugin-tailwind": "3.0.0"  },
+    "vue-cli-plugin-tailwind": "3.0.0"
+  },
   "eslintConfig": {
     "root": true,
     "env": {
@@ -46,7 +48,9 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-    "rules": {"vue/multi-word-component-names": "off"}
+    "rules": {
+      "vue/multi-word-component-names": "off"
+    }
   },
   "browserslist": [
     "> 1%",

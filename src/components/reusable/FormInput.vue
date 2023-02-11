@@ -36,6 +36,7 @@ export default {
 			:aria-label="inputIdentifier"
 			:value="val"
 			:type="inputType"
+			:v-model="v-model"
 			v-bind="$attrs"
 			@input="$emit('update:val', $event.target.value)"
 			required
